@@ -40,6 +40,7 @@ class App {
   private datetimeInput: HTMLInputElement;
   private timezoneInput: HTMLInputElement;
   private convertBtn: HTMLButtonElement;
+  private resetBtn: HTMLButtonElement;
   private resultsDiv: HTMLDivElement;
   private timezoneAutocomplete!: AutocompleteInput;
   private timezones: string[] = [];
@@ -50,6 +51,7 @@ class App {
     this.datetimeInput = document.getElementById('datetime-input') as HTMLInputElement;
     this.timezoneInput = document.getElementById('timezone-input') as HTMLInputElement;
     this.convertBtn = document.getElementById('convert-btn') as HTMLButtonElement;
+    this.resetBtn = document.getElementById('reset-timezones-btn') as HTMLButtonElement;
     this.resultsDiv = document.getElementById('results') as HTMLDivElement;
 
     this.setupTimezoneAutocomplete();
@@ -88,6 +90,7 @@ class App {
         this.addTimezone();
       }
     });
+    this.resetBtn.addEventListener('click', () => this.resetTimezones());
   }
 
   /** Load saved timezones or default */
@@ -150,6 +153,14 @@ class App {
       this.renderTimezoneList();
     }
     this.timezoneInput.value = '';
+  }
+
+  /** Reset stored timezones to default */
+  private resetTimezones(): void {
+    localStorage.removeItem('timezones');
+    this.timezones = [];
+    this.loadTimezones();
+    this.renderTimezoneList();
   }
 
   private handleConvert(): void {
