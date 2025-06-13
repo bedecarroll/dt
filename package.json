@@ -7,9 +7,10 @@
   },
   "description": "A simple static website for converting natural language date/time strings to different timezones",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && rm -rf public && mkdir -p public && cp index.html styles.css public/ && cp -r dist public/",
     "dev": "tsc --watch",
-    "serve": "python3 -m http.server 8000"
+    "serve": "serve public",
+    "serve:python": "python3 -m http.server 8000"
   },
   "type": "module"
 }

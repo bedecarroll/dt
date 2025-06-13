@@ -21,11 +21,13 @@
  ```bash
  git clone <repo-url>
  cd dt-datetime-converter
+ # Install dependencies (after removing node_modules or on fresh clone)
  npm install
+ # Build the static site into ./public
  npm run build
- # Serve locally:
+ # Serve locally (install if needed):
  npm install -g serve
- serve .
+ serve public       # serve from the generated public directory
  ```
 
  ### Usage
@@ -37,7 +39,7 @@
     - A list of converted timestamps with copy buttons.
 
  ## Deployment
-Copy all files (`index.html`, `styles.css`, `dist/`) to your static hosting environment.
+ Copy the entire `public/` directory to your static hosting environment (it contains `index.html`, `styles.css`, and `dist/`).
 
 ### Cloudflare Pages
 1. Create a Pages project and connect your repository.
@@ -56,8 +58,8 @@ Copy all files (`index.html`, `styles.css`, `dist/`) to your static hosting envi
    account_id = "YOUR_ACCOUNT_ID"
    workers_dev = true
 
-   [site]
-   bucket = "./"          # path to your static assets
+  [site]
+   bucket = "./public"     # path to your generated static site
    entry-point = "workers-site"
    ```
 3. Ensure `index.html`, `styles.css`, and `dist/` live under the `bucket` directory (root or `workers-site`).
