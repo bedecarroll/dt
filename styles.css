@@ -57,6 +57,17 @@ button:hover {
   background: #000;
   color: #fff;
 }
+.reset-btn {
+  margin-top: 10px;
+  border: 4px solid #000;
+  background: transparent;
+  color: #000;
+  font-family: inherit;
+}
+.tz-note {
+  margin-top: 5px;
+  font-size: 0.9rem;
+}
 .results-section {
   margin-top: 20px;
   border-top: 4px solid #000;
