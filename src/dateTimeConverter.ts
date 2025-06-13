@@ -86,8 +86,17 @@ export class DateTimeConverter {
 
   static parseAndConvert(input: string, targetTimezone: string): ConversionResult {
     try {
-      // Use Sugar.js to parse natural language dates
-      const parsedDate = Sugar.Date.create(input);
+      let parsedDate: Date | null = null;
+      const trimmed = input.trim();
+      // Check for numeric Unix epoch (seconds or milliseconds)
+      if (/^\d{9,}$/.test(trimmed)) {
+        const num = parseInt(trimmed, 10);
+        // If 10 digits or less assume seconds, otherwise milliseconds
+        parsedDate = trimmed.length <= 10 ? new Date(num * 1000) : new Date(num);
+      } else {
+        // Use Sugar.js to parse natural language dates
+        parsedDate = Sugar.Date.create(trimmed);
+      }
       
       if (!parsedDate || isNaN(parsedDate.getTime())) {
         return {
