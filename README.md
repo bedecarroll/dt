@@ -3,8 +3,9 @@
  A simple static web app to parse natural language date/time strings and convert them across multiple timezones. Built with TypeScript, Sugar.js, and a brutalist CSS style.
 
  ## Features
- - Natural language parsing (e.g., "tomorrow at 3pm", "next Friday").
- - Support for multiple timezones with autocomplete and localStorage persistence.
+- Natural language parsing (e.g., "tomorrow at 3pm", "next Friday").
+- Accepts Unix epoch timestamps (seconds or milliseconds).
+- Support for multiple timezones with autocomplete and localStorage persistence.
  - 24-hour timeline visualization showing the hour of each timezone.
  - Format toggles: **Long**, **Short**, and **ISO** representations.
  - Copy-to-clipboard buttons for each converted timestamp.
