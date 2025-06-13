@@ -6,6 +6,7 @@
 - Natural language parsing (e.g., "tomorrow at 3pm", "next Friday").
 - Accepts Unix epoch timestamps (seconds or milliseconds).
 - Support for multiple timezones with autocomplete and localStorage persistence.
+- Timezone selections persist in your browser. Use the **Reset Timezones** button to clear them.
  - 24-hour timeline visualization showing the hour of each timezone.
  - Format toggles: **Long**, **Short**, and **ISO** representations.
  - Copy-to-clipboard buttons for each converted timestamp.
@@ -34,10 +35,11 @@
  ### Usage
  1. **Enter a date/time** in the top input (e.g., "today at 14:30").
  2. **Add timezones** by typing into the timezone box and pressing Enter (e.g., "UTC", "America/New_York").
- 3. **Select an output format**: Long, Short, or ISO.
- 4. **Click Convert** to see:
+3. **Select an output format**: Long, Short, or ISO.
+4. **Click Convert** to see:
     - A 24-hour timeline for each timezone with the converted hour highlighted.
     - A list of converted timestamps with copy buttons.
+5. **Reset Timezones** anytime using the button under the timezone input.
 
  ## Deployment
  Copy the entire `public/` directory to your static hosting environment (it contains `index.html`, `styles.css`, and `dist/`).

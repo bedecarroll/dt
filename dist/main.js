@@ -40,6 +40,7 @@ class App {
         this.datetimeInput = document.getElementById('datetime-input');
         this.timezoneInput = document.getElementById('timezone-input');
         this.convertBtn = document.getElementById('convert-btn');
+        this.resetBtn = document.getElementById('reset-timezones-btn');
         this.resultsDiv = document.getElementById('results');
         this.setupTimezoneAutocomplete();
         this.loadTimezones();
@@ -75,6 +76,7 @@ class App {
                 this.addTimezone();
             }
         });
+        this.resetBtn.addEventListener('click', () => this.resetTimezones());
     }
     /** Load saved timezones or default */
     loadTimezones() {
@@ -141,6 +143,13 @@ class App {
             this.renderTimezoneList();
         }
         this.timezoneInput.value = '';
+    }
+    /** Reset stored timezones to default */
+    resetTimezones() {
+        localStorage.removeItem('timezones');
+        this.timezones = [];
+        this.loadTimezones();
+        this.renderTimezoneList();
     }
     handleConvert() {
         const datetimeText = this.datetimeInput.value.trim();
