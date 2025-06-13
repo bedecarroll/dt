@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DT - DateTime Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>DT - DateTime Converter</h1>
+            <p>Convert natural language date/time strings to different timezones</p>
+        </header>
+        
+        <main>
+            <div class="input-section">
+                <label for="datetime-input">Enter date/time (e.g., "tomorrow at 3pm", "next Friday")</label>
+                <input type="text" id="datetime-input" placeholder="Enter natural language date/time...">
+            </div>
+            
+            <div class="timezone-section">
+                <label for="timezone-input">Add timezones:</label>
+                <input type="text" id="timezone-input" placeholder="Type timezone and press Enter...">
+                <div id="timezone-list" class="timezone-list"></div>
+            </div>
+            <!-- Format selection -->
+            <div class="format-section">
+                <label>Output format:</label>
+                <button class="fmt-btn selected" data-format="long">Long</button>
+                <button class="fmt-btn" data-format="short">Short</button>
+                <button class="fmt-btn" data-format="iso">ISO</button>
+            </div>
+            
+            <button id="convert-btn" class="convert-btn">Convert</button>
+            
+            <div id="results" class="results-section">
+                <!-- Timeline visualization -->
+                <div id="timeline" class="timeline"></div>
+                <!-- Conversion results list -->
+                <div id="conversion-list" class="conversion-list"></div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sugar@2.0.6/dist/sugar.min.js"></script>
+    <script type="module" src="dist/main.js"></script>
+</body>
+</html>
