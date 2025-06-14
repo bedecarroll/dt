@@ -46,6 +46,8 @@ class App {
   private timezones: string[] = [];
   private currentFormat: FormatType = 'long';
   private lastParsedDate?: Date;
+  // Browser/home timezone for parsing context
+  private homeTimezone: string;
   private resetResultsContainer(): void {
     this.resultsDiv.innerHTML = `
       <div id="timeline" class="timeline"></div>
@@ -59,6 +61,14 @@ class App {
     this.convertBtn = document.getElementById('convert-btn') as HTMLButtonElement;
     this.resetBtn = document.getElementById('reset-timezones-btn') as HTMLButtonElement;
     this.resultsDiv = document.getElementById('results') as HTMLDivElement;
+    // Determine the browser (home) timezone
+    let browserTZ = 'UTC';
+    try {
+      browserTZ = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+    } catch {
+      browserTZ = 'UTC';
+    }
+    this.homeTimezone = browserTZ;
 
     this.setupTimezoneAutocomplete();
     this.loadTimezones();
@@ -240,7 +250,12 @@ class App {
       const item = document.createElement('div');
       item.className = 'result-item';
       const h3 = document.createElement('h3');
-      h3.textContent = tz;
+      // Annotate browser timezone with '(home)'
+      let labelText = tz;
+      if (tz === this.homeTimezone) {
+        labelText += ' (home)';
+      }
+      h3.textContent = labelText;
       const p = document.createElement('p');
       p.textContent = converted;
       const pid = `conv-${tz.replace(/[^a-zA-Z0-9]/g, '_')}`;
@@ -283,9 +298,16 @@ class App {
       // Build row
       const row = document.createElement('div'); row.className = 'timeline-row';
       const label = document.createElement('div'); label.className = 'tz-label';
+      // Annotate browser timezone with '(home)'
       let labelText = tz;
-      if (dayDiff === -1) labelText += ' (prev day)';
-      else if (dayDiff === 1) labelText += ' (next day)';
+      if (tz === this.homeTimezone) {
+        labelText += ' (home)';
+      }
+      if (dayDiff === -1) {
+        labelText += ' (prev day)';
+      } else if (dayDiff === 1) {
+        labelText += ' (next day)';
+      }
       label.textContent = labelText;
       // (Optional) color label background to match tag color
       label.style.backgroundColor = color;
