@@ -17,24 +17,30 @@
         <main>
             <div class="input-section">
                 <label for="datetime-input">Enter date/time (e.g., "tomorrow at 3pm", "next Friday", "in 24 hours", "1609459200")</label>
-                <input type="text" id="datetime-input" placeholder="Enter natural language date/time...">
+                <input type="text" id="datetime-input" placeholder="Enter natural language date/time..." aria-describedby="datetime-help">
+                <div id="datetime-help" class="sr-only">Enter natural language date and time expressions or Unix timestamps</div>
             </div>
             
             <div class="timezone-section">
                 <label for="timezone-input">Add timezones:</label>
-                <input type="text" id="timezone-input" placeholder="Type timezone and press Enter...">
-                <button id="reset-timezones-btn" class="reset-btn">Reset Timezones</button>
-                <div id="timezone-list" class="timezone-list"></div>
+                <input type="text" id="timezone-input" placeholder="Type timezone and press Enter..." aria-describedby="timezone-help" role="combobox" aria-autocomplete="list" aria-expanded="false">
+                <div id="timezone-help" class="sr-only">Type timezone name or abbreviation and press Enter to add. Use arrow keys to navigate suggestions.</div>
+                <button id="reset-timezones-btn" class="reset-btn" aria-describedby="reset-help">Reset Timezones</button>
+                <div id="reset-help" class="sr-only">Remove all selected timezones and reset to browser default</div>
+                <div id="timezone-list" class="timezone-list" aria-label="Selected timezones" role="list"></div>
             </div>
             <!-- Format selection -->
             <div class="format-section">
-                <label>Output format:</label>
-                <button class="fmt-btn selected" data-format="long">Long</button>
-                <button class="fmt-btn" data-format="short">Short</button>
-                <button class="fmt-btn" data-format="iso">ISO</button>
+                <fieldset>
+                    <legend>Output format:</legend>
+                    <button class="fmt-btn selected" data-format="long" role="radio" aria-checked="true">Long</button>
+                    <button class="fmt-btn" data-format="short" role="radio" aria-checked="false">Short</button>
+                    <button class="fmt-btn" data-format="iso" role="radio" aria-checked="false">ISO</button>
+                </fieldset>
             </div>
             
-            <button id="convert-btn" class="convert-btn">Convert</button>
+            <button id="convert-btn" class="convert-btn" aria-describedby="convert-help">Convert</button>
+            <div id="convert-help" class="sr-only">Convert the entered date/time to all selected timezones</div>
             
             <div id="results" class="results-section">
                 <!-- Timeline visualization -->

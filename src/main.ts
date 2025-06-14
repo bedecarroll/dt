@@ -7,7 +7,7 @@ const TZ_ABBREVIATIONS: Record<string, string> = {
   'GMT': 'UTC',
   'EST': 'America/New_York',
   'EDT': 'America/New_York',
-  'CST': 'Asia/Shanghai',
+  'CST': 'America/Chicago',
   'CDT': 'America/Chicago',
   'MST': 'America/Denver',
   'MDT': 'America/Denver',
@@ -90,6 +90,10 @@ class App {
       this.timezoneInput.value = value;
       this.addTimezone();
     });
+    // Update ARIA expanded state based on dropdown visibility
+    this.timezoneAutocomplete.onToggle((isOpen) => {
+      this.timezoneInput.setAttribute('aria-expanded', isOpen.toString());
+    });
   }
 
   private bindEvents(): void {
@@ -133,6 +137,9 @@ class App {
     this.timezones.forEach((tz, idx) => {
       const tag = document.createElement('span');
       tag.className = 'tz-tag';
+      tag.setAttribute('role', 'listitem');
+      tag.setAttribute('tabindex', '0');
+      tag.setAttribute('aria-label', `Remove timezone ${tz}`);
       // Color-code tags
       const color = TAG_COLORS[idx % TAG_COLORS.length];
       tag.style.backgroundColor = color;
@@ -141,10 +148,18 @@ class App {
       tag.title = 'Click to remove timezone';
       tag.style.cursor = 'pointer';
       
-      tag.addEventListener('click', () => {
+      const removeTimezone = () => {
         this.timezones = this.timezones.filter(t => t !== tz);
         localStorage.setItem('timezones', JSON.stringify(this.timezones));
         this.renderTimezoneList();
+      };
+      
+      tag.addEventListener('click', removeTimezone);
+      tag.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          removeTimezone();
+        }
       });
       
       list.appendChild(tag);
@@ -165,7 +180,12 @@ class App {
     const all = DateTimeConverter.getAllTimezones();
     const validZones = new Set<string>([...all, ...Object.values(TZ_ABBREVIATIONS)]);
     if (!validZones.has(tz)) {
-      alert(`Invalid timezone: ${inputVal}`);
+      // Find similar timezones for suggestions
+      const suggestions = this.findSimilarTimezones(inputVal, all);
+      const suggestionText = suggestions.length > 0 
+        ? ` Did you mean: ${suggestions.slice(0, 3).join(', ')}?`
+        : ' Try typing a few letters to see available options.';
+      alert(`Invalid timezone: ${inputVal}.${suggestionText}`);
       return;
     }
     if (!this.timezones.includes(tz)) {
@@ -174,6 +194,24 @@ class App {
       this.renderTimezoneList();
     }
     this.timezoneInput.value = '';
+  }
+
+  /** Find similar timezone names for suggestions */
+  private findSimilarTimezones(input: string, timezones: string[]): string[] {
+    const query = input.toLowerCase();
+    return timezones
+      .filter(tz => tz.toLowerCase().includes(query))
+      .sort((a, b) => {
+        // Prefer exact matches or those starting with the query
+        const aLower = a.toLowerCase();
+        const bLower = b.toLowerCase();
+        const aStarts = aLower.startsWith(query);
+        const bStarts = bLower.startsWith(query);
+        if (aStarts && !bStarts) return -1;
+        if (!aStarts && bStarts) return 1;
+        return a.length - b.length; // Prefer shorter matches
+      })
+      .slice(0, 5);
   }
 
   /** Reset stored timezones to default */
@@ -354,17 +392,23 @@ class App {
       const f = b.getAttribute('data-format') as FormatType;
       if (f === this.currentFormat) {
         b.classList.add('selected');
+        b.setAttribute('aria-checked', 'true');
       } else {
         b.classList.remove('selected');
+        b.setAttribute('aria-checked', 'false');
       }
     });
     // Bind click handlers
     btns.forEach(btn => {
       btn.addEventListener('click', () => {
         const fmt = btn.getAttribute('data-format') as FormatType;
-        // Update UI
-        btns.forEach(b => b.classList.remove('selected'));
+        // Update UI and ARIA states
+        btns.forEach(b => {
+          b.classList.remove('selected');
+          b.setAttribute('aria-checked', 'false');
+        });
         btn.classList.add('selected');
+        btn.setAttribute('aria-checked', 'true');
         // Store format
         this.currentFormat = fmt;
         localStorage.setItem('format', fmt);

@@ -5,6 +5,7 @@ export class AutocompleteInput {
   private filteredOptions: string[] = [];
   private selectedIndex: number = -1;
   private onSelectCallback?: (value: string) => void;
+  private onToggleCallback?: (isOpen: boolean) => void;
 
   constructor(inputElement: HTMLInputElement, options: string[]) {
     this.input = inputElement;
@@ -120,14 +121,20 @@ export class AutocompleteInput {
   private showDropdown(): void {
     this.positionDropdown();
     this.dropdown.style.display = 'block';
+    this.onToggleCallback?.(true);
   }
 
   private hideDropdown(): void {
     this.dropdown.style.display = 'none';
     this.selectedIndex = -1;
+    this.onToggleCallback?.(false);
   }
 
   onSelect(callback: (value: string) => void): void {
     this.onSelectCallback = callback;
+  }
+
+  onToggle(callback: (isOpen: boolean) => void): void {
+    this.onToggleCallback = callback;
   }
 }
