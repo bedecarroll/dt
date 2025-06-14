@@ -88,6 +88,9 @@ button:hover {
   border-top: 4px solid #000;
   padding-top: 10px;
 }
+body.dark .results-section {
+  border-color: #fff;
+}
 .result-item {
   margin-bottom: 20px;
 }
