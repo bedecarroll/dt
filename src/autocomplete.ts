@@ -17,7 +17,16 @@ export class AutocompleteInput {
     this.dropdown = document.createElement('div');
     this.dropdown.className = 'autocomplete-dropdown';
     this.dropdown.style.display = 'none';
-    this.input.parentNode?.appendChild(this.dropdown);
+    document.body.appendChild(this.dropdown);
+    this.positionDropdown();
+  }
+
+  private positionDropdown(): void {
+    const rect = this.input.getBoundingClientRect();
+    this.dropdown.style.position = 'absolute';
+    this.dropdown.style.top = `${rect.bottom + window.scrollY}px`;
+    this.dropdown.style.left = `${rect.left + window.scrollX}px`;
+    this.dropdown.style.width = `${rect.width}px`;
   }
 
   private bindEvents(): void {
@@ -109,6 +118,7 @@ export class AutocompleteInput {
   }
 
   private showDropdown(): void {
+    this.positionDropdown();
     this.dropdown.style.display = 'block';
   }
 

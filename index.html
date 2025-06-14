@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DT - DateTime Converter</title>
+    <title>Date time converter</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>DT - DateTime Converter</h1>
-            <p>Convert natural language date/time strings to different timezones</p>
+            <h1>Date time converter</h1>
+            <p>Convert natural language or timestamp date/time strings to different timezones</p>
+            <p class="tz-note">Timezones are saved in your browser. Click any timezone to remove it, or use reset to clear all</p>
         </header>
         
         <main>
@@ -24,7 +25,6 @@
                 <input type="text" id="timezone-input" placeholder="Type timezone and press Enter...">
                 <button id="reset-timezones-btn" class="reset-btn">Reset Timezones</button>
                 <div id="timezone-list" class="timezone-list"></div>
-                <p class="tz-note">Timezones are saved in your browser. Use reset to clear them.</p>
             </div>
             <!-- Format selection -->
             <div class="format-section">

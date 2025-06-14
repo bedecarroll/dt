@@ -137,17 +137,16 @@ class App {
       const color = TAG_COLORS[idx % TAG_COLORS.length];
       tag.style.backgroundColor = color;
       tag.style.color = '#000';
-     tag.textContent = tz;
-      const btn = document.createElement('button');
-      btn.className = 'remove-btn';
-      btn.textContent = '×';
-      btn.title = 'Remove timezone';
-      btn.addEventListener('click', () => {
+      tag.textContent = tz;
+      tag.title = 'Click to remove timezone';
+      tag.style.cursor = 'pointer';
+      
+      tag.addEventListener('click', () => {
         this.timezones = this.timezones.filter(t => t !== tz);
         localStorage.setItem('timezones', JSON.stringify(this.timezones));
         this.renderTimezoneList();
       });
-      tag.appendChild(btn);
+      
       list.appendChild(tag);
     });
   }
