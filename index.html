@@ -9,7 +9,11 @@
 <body>
     <div class="container">
         <header>
-            <h1>Date time converter</h1>
+            <div class="header-bar">
+                <h1>Date time converter</h1>
+                <button id="theme-toggle-btn" class="theme-toggle-btn" aria-describedby="theme-help" title="Toggle Dark Mode">&#9728;&#65039;</button>
+            </div>
+            <div id="theme-help" class="sr-only">Switch between light and dark theme</div>
             <p>Convert natural language or timestamp date/time strings to different timezones</p>
             <p class="tz-note">Timezones are saved in your browser. Click any timezone to remove it, or use reset to clear all</p>
         </header>
@@ -28,8 +32,6 @@
                 <button id="reset-timezones-btn" class="reset-btn" aria-describedby="reset-help">Reset Timezones</button>
                 <div id="reset-help" class="sr-only">Remove all selected timezones and reset to browser default</div>
                 <div id="timezone-list" class="timezone-list" aria-label="Selected timezones" role="list"></div>
-                <button id="theme-toggle-btn" class="theme-toggle-btn" aria-describedby="theme-help">Toggle Dark Mode</button>
-                <div id="theme-help" class="sr-only">Switch between light and dark theme</div>
             </div>
             <!-- Format selection -->
             <div class="format-section">

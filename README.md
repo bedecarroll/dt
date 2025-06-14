@@ -43,7 +43,7 @@
     - A 24-hour timeline for each timezone with the converted hour highlighted.
     - A list of converted timestamps with copy buttons.
 5. **Reset Timezones** anytime using the button under the timezone input.
-6. **Toggle Dark Mode** with the button under the timezone list.
+6. **Toggle Dark Mode** using the button in the header.
 
  ## Deployment
  Copy the entire `public/` directory to your static hosting environment (it contains `index.html`, `styles.css`, and `dist/`).
