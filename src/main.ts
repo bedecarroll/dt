@@ -36,11 +36,14 @@ const TAG_COLORS: string[] = [
   '#ff9e80'  // peach
 ];
 
+const SHOW_RELATIVE_DIFF = true;
+
 class App {
   private datetimeInput: HTMLInputElement;
   private timezoneInput: HTMLInputElement;
   private convertBtn: HTMLButtonElement;
   private resetBtn: HTMLButtonElement;
+  private themeToggleBtn: HTMLButtonElement;
   private resultsDiv: HTMLDivElement;
   private timezoneAutocomplete!: AutocompleteInput;
   private timezones: string[] = [];
@@ -60,6 +63,7 @@ class App {
     this.timezoneInput = document.getElementById('timezone-input') as HTMLInputElement;
     this.convertBtn = document.getElementById('convert-btn') as HTMLButtonElement;
     this.resetBtn = document.getElementById('reset-timezones-btn') as HTMLButtonElement;
+    this.themeToggleBtn = document.getElementById('theme-toggle-btn') as HTMLButtonElement;
     this.resultsDiv = document.getElementById('results') as HTMLDivElement;
     // Determine the browser (home) timezone
     let browserTZ = 'UTC';
@@ -75,6 +79,8 @@ class App {
     this.renderTimezoneList();
     this.bindEvents();
     this.attachCopyHandlers();
+    this.loadThemeFromStorage();
+    this.bindThemeToggle();
     this.loadFormatFromStorage();
     this.bindFormatButtons();
   }
@@ -294,7 +300,29 @@ class App {
       }
       h3.textContent = labelText;
       const p = document.createElement('p');
-      p.textContent = converted;
+      let displayText = converted;
+      if (SHOW_RELATIVE_DIFF) {
+        const off = DateTimeConverter.getTimezoneOffset(parsedDate, tz);
+        const homeOff = DateTimeConverter.getTimezoneOffset(parsedDate, this.homeTimezone);
+        const diffMin = off - homeOff;
+        const offsetStr = DateTimeConverter.getOffsetString(parsedDate, tz);
+        let rel = '';
+        if (diffMin === 0) {
+          rel = 'same as home';
+        } else {
+          const ahead = diffMin > 0;
+          const absMin = Math.abs(diffMin);
+          const h = Math.floor(absMin / 60);
+          const m = absMin % 60;
+          const parts = [] as string[];
+          if (h) parts.push(`${h} hour${h !== 1 ? 's' : ''}`);
+          if (m) parts.push(`${m} minute${m !== 1 ? 's' : ''}`);
+          rel = parts.join(' ');
+          rel += ahead ? ' ahead' : ' behind';
+        }
+        displayText += ` (${offsetStr}, ${rel})`;
+      }
+      p.textContent = displayText;
       const pid = `conv-${tz.replace(/[^a-zA-Z0-9]/g, '_')}`;
       p.id = pid;
       const btn = document.createElement('button');
@@ -417,6 +445,21 @@ class App {
           this.renderConversions(this.lastParsedDate);
         }
       });
+    });
+  }
+
+  /** Load theme preference from localStorage */
+  private loadThemeFromStorage(): void {
+    const stored = localStorage.getItem('theme');
+    const dark = stored === 'dark';
+    document.body.classList.toggle('dark', dark);
+  }
+
+  /** Toggle dark/light theme */
+  private bindThemeToggle(): void {
+    this.themeToggleBtn.addEventListener('click', () => {
+      const isDark = document.body.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
     });
   }
 }

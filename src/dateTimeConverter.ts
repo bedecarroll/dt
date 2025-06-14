@@ -124,6 +124,35 @@ export class DateTimeConverter {
     }
   }
 
+  /** Get numeric offset from UTC in minutes for the given date and timezone */
+  static getTimezoneOffset(date: Date, timezone: string): number {
+    const fmt = new Intl.DateTimeFormat('en-US', {
+      timeZone: timezone,
+      timeZoneName: 'shortOffset',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
+    });
+    const parts = fmt.formatToParts(date);
+    const tzPart = parts.find(p => p.type === 'timeZoneName');
+    if (!tzPart) return 0;
+    const m = tzPart.value.match(/GMT([+-])(\d{1,2})(?::?(\d{2}))?/);
+    if (!m) return 0;
+    const sign = m[1] === '+' ? 1 : -1;
+    const hours = parseInt(m[2], 10);
+    const mins = m[3] ? parseInt(m[3], 10) : 0;
+    return sign * (hours * 60 + mins);
+  }
+
+  /** Return a formatted UTC offset string like "UTC+02:00" */
+  static getOffsetString(date: Date, timezone: string): string {
+    const offset = DateTimeConverter.getTimezoneOffset(date, timezone);
+    const sign = offset >= 0 ? '+' : '-';
+    const abs = Math.abs(offset);
+    const hh = Math.floor(abs / 60).toString().padStart(2, '0');
+    const mm = (abs % 60).toString().padStart(2, '0');
+    return `UTC${sign}${hh}:${mm}`;
+  }
+
   static getAllTimezones(): string[] {
     // Fallback list for older browsers that don't support Intl.supportedValuesOf
     const commonTimezones = [

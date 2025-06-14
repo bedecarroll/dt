@@ -8,9 +8,11 @@
 - Support for multiple timezones with autocomplete and localStorage persistence.
 - Timezone selections persist in your browser. Use the **Reset Timezones** button to clear them.
 - Defaults to your browser's local timezone on first load.
- - 24-hour timeline visualization showing the hour of each timezone.
- - Format toggles: **Long**, **Short**, and **ISO** representations.
- - Copy-to-clipboard buttons for each converted timestamp.
+- 24-hour timeline visualization showing the hour of each timezone.
+- Format toggles: **Long**, **Short**, and **ISO** representations.
+- Copy-to-clipboard buttons for each converted timestamp.
+- Optional dark mode toggle to switch themes.
+- Relative difference display showing offset from your home timezone.
 
  ## Live Demo
  Just open `index.html` in any modern browser. No server required (can be hosted on Cloudflare Workers or any static host).
@@ -41,6 +43,7 @@
     - A 24-hour timeline for each timezone with the converted hour highlighted.
     - A list of converted timestamps with copy buttons.
 5. **Reset Timezones** anytime using the button under the timezone input.
+6. **Toggle Dark Mode** with the button under the timezone list.
 
  ## Deployment
  Copy the entire `public/` directory to your static hosting environment (it contains `index.html`, `styles.css`, and `dist/`).

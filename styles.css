@@ -64,6 +64,13 @@ button:hover {
   color: #000;
   font-family: inherit;
 }
+.theme-toggle-btn {
+  margin-top: 10px;
+  border: 4px solid #000;
+  background: transparent;
+  color: #000;
+  font-family: inherit;
+}
 .tz-note {
   margin-top: 5px;
   font-size: 0.9rem;
@@ -240,6 +247,9 @@ button.convert-btn:hover {
   border-left: 2px solid #000;
   position: relative;
 }
+body.dark .hour-block {
+  border-left: 2px solid #fff;
+}
 .hour-block:first-child {
   border-left: none;
 }
@@ -270,4 +280,47 @@ button.convert-btn:hover {
   padding: 10px;
   border: 4px solid #000;
   line-height: 1;
+}
+
+/* Dark mode styles */
+body.dark {
+  background: #000;
+  color: #fff;
+}
+body.dark .container,
+body.dark header {
+  border-color: #fff;
+}
+body.dark input[type="text"],
+body.dark button,
+body.dark .reset-btn,
+body.dark .theme-toggle-btn,
+body.dark .fmt-btn,
+body.dark .tz-tag,
+body.dark .copy-btn,
+body.dark .autocomplete-dropdown,
+body.dark .result-item p {
+  background: #333;
+  color: #fff;
+  border-color: #fff;
+}
+body.dark button:hover,
+body.dark .fmt-btn:hover,
+body.dark .fmt-btn.selected,
+body.dark .reset-btn:hover,
+body.dark .tz-tag:hover,
+body.dark .copy-btn:hover,
+body.dark .theme-toggle-btn:hover,
+body.dark .autocomplete-item:hover,
+body.dark .autocomplete-item.selected {
+  background: #fff;
+  color: #000;
+}
+body.dark button.convert-btn {
+  background: #fff;
+  color: #000;
+}
+body.dark button.convert-btn:hover {
+  background: #333;
+  color: #fff;
 }
