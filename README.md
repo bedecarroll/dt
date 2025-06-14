@@ -7,6 +7,7 @@
 - Accepts Unix epoch timestamps (seconds or milliseconds).
 - Support for multiple timezones with autocomplete and localStorage persistence.
 - Timezone selections persist in your browser. Use the **Reset Timezones** button to clear them.
+- Defaults to your browser's local timezone on first load.
  - 24-hour timeline visualization showing the hour of each timezone.
  - Format toggles: **Long**, **Short**, and **ISO** representations.
  - Copy-to-clipboard buttons for each converted timestamp.

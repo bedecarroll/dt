@@ -46,6 +46,12 @@ class App {
   private timezones: string[] = [];
   private currentFormat: FormatType = 'long';
   private lastParsedDate?: Date;
+  private resetResultsContainer(): void {
+    this.resultsDiv.innerHTML = `
+      <div id="timeline" class="timeline"></div>
+      <div id="conversion-list" class="conversion-list"></div>
+    `;
+  }
 
   constructor() {
     this.datetimeInput = document.getElementById('datetime-input') as HTMLInputElement;
@@ -100,7 +106,13 @@ class App {
       try { this.timezones = JSON.parse(stored); } catch { this.timezones = []; }
     }
     if (!this.timezones || this.timezones.length === 0) {
-      this.timezones = ['America/Los_Angeles'];
+      let tz = 'UTC';
+      try {
+        tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+      } catch {
+        tz = 'UTC';
+      }
+      this.timezones = [tz];
       localStorage.setItem('timezones', JSON.stringify(this.timezones));
     }
   }
@@ -188,6 +200,7 @@ class App {
       this.showError(result.error);
       return;
     }
+    this.resetResultsContainer();
     // Show results container
     this.resultsDiv.style.display = 'block';
     // Render timeline for parsed date
@@ -203,6 +216,8 @@ class App {
         <h3>Error:</h3>
         <p>${message}</p>
       </div>
+      <div id="timeline" class="timeline"></div>
+      <div id="conversion-list" class="conversion-list"></div>
     `;
     this.resultsDiv.style.display = 'block';
   }
