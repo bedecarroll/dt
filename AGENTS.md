@@ -6,7 +6,7 @@ This document provides guidelines for AI agents interacting with the `dt-datetim
 - `index.html`: Static HTML entry point for the UI.
 - `styles.css`: Brutalist CSS styling.
 - `src/`: TypeScript source code (logic and components).
-  - `main.ts`: Application orchestration, event binding, and rendering.
+  - `main.ts`: Application orchestration, event binding, and rendering. Detects the browser (home) timezone and appends `(home)` to the corresponding timezone name in both the conversion list and the timeline.
   - `autocomplete.ts`: Autocomplete widget for timezone input.
   - `dateTimeConverter.ts`: Natural language parsing and timezone formatting logic.
 - `dist/`: Compiled JavaScript output.
