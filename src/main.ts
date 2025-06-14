@@ -36,7 +36,7 @@ const TAG_COLORS: string[] = [
   '#ff9e80'  // peach
 ];
 
-const SHOW_RELATIVE_DIFF = true;
+const SHOW_RELATIVE_DIFF = false;
 
 class App {
   private datetimeInput: HTMLInputElement;

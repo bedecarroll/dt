@@ -12,7 +12,6 @@
 - Format toggles: **Long**, **Short**, and **ISO** representations.
 - Copy-to-clipboard buttons for each converted timestamp.
 - Optional dark mode toggle to switch themes.
-- Relative difference display showing offset from your home timezone.
 
  ## Live Demo
  Just open `index.html` in any modern browser. No server required (can be hosted on Cloudflare Workers or any static host).
