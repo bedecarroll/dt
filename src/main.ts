@@ -223,9 +223,12 @@ class App {
   /** Reset stored timezones to default */
   private resetTimezones(): void {
     localStorage.removeItem('timezones');
+    localStorage.removeItem('theme');
     this.timezones = [];
     this.loadTimezones();
     this.renderTimezoneList();
+    document.body.classList.remove('dark');
+    this.updateThemeIcon(false);
   }
 
   private handleConvert(): void {
@@ -448,11 +451,17 @@ class App {
     });
   }
 
+  /** Update the theme toggle icon based on dark mode state */
+  private updateThemeIcon(isDark: boolean): void {
+    this.themeToggleBtn.textContent = isDark ? '\uD83C\uDF19' : '\u2600\uFE0F';
+  }
+
   /** Load theme preference from localStorage */
   private loadThemeFromStorage(): void {
     const stored = localStorage.getItem('theme');
     const dark = stored === 'dark';
     document.body.classList.toggle('dark', dark);
+    this.updateThemeIcon(dark);
   }
 
   /** Toggle dark/light theme */
@@ -460,6 +469,7 @@ class App {
     this.themeToggleBtn.addEventListener('click', () => {
       const isDark = document.body.classList.toggle('dark');
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      this.updateThemeIcon(isDark);
     });
   }
 }
