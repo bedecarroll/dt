@@ -309,9 +309,8 @@ class App {
         const homeOff = DateTimeConverter.getTimezoneOffset(parsedDate, this.homeTimezone);
         const diffMin = off - homeOff;
         const offsetStr = DateTimeConverter.getOffsetString(parsedDate, tz);
-        let rel = '';
         if (diffMin === 0) {
-          rel = 'same as home';
+          displayText += ` (${offsetStr})`;
         } else {
           const ahead = diffMin > 0;
           const absMin = Math.abs(diffMin);
@@ -320,10 +319,9 @@ class App {
           const parts = [] as string[];
           if (h) parts.push(`${h} hour${h !== 1 ? 's' : ''}`);
           if (m) parts.push(`${m} minute${m !== 1 ? 's' : ''}`);
-          rel = parts.join(' ');
-          rel += ahead ? ' ahead' : ' behind';
+          const rel = `${parts.join(' ')} ${ahead ? 'ahead' : 'behind'}`;
+          displayText += ` (${offsetStr}, ${rel})`;
         }
-        displayText += ` (${offsetStr}, ${rel})`;
       }
       p.textContent = displayText;
       const pid = `conv-${tz.replace(/[^a-zA-Z0-9]/g, '_')}`;
