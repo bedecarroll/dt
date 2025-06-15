@@ -30,7 +30,9 @@ export class DateTimeConverter {
             timeZone: timezone,
             year: 'numeric', month: '2-digit', day: '2-digit',
             hour: '2-digit', minute: '2-digit', second: '2-digit',
-            timeZoneName: 'shortOffset'
+            timeZoneName: 'shortOffset',
+            // Ensure 24-hour clock so hour values match ISO expectations
+            hour12: false
           });
           const parts = formatter.formatToParts(date);
           let year = '0000', month = '01', day = '01';
