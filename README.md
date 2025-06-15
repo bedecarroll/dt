@@ -1,4 +1,4 @@
- # DT - DateTime Converter
+ # TZ - Timezone Converter
 
  A simple static web app to parse natural language date/time strings and convert them across multiple timezones. Built with TypeScript, Sugar.js, and a brutalist CSS style.
 
@@ -24,7 +24,7 @@
  ### Installation
  ```bash
  git clone <repo-url>
- cd dt-datetime-converter
+ cd tz
  # Install dependencies (after removing node_modules or on fresh clone)
  npm install
  # Build the static site into ./public
@@ -58,7 +58,7 @@
 1. Install Wrangler: `npm install -g wrangler`.
 2. Create or update `wrangler.toml` in the project root:
    ```toml
-   name = "dt-datetime-converter"
+   name = "tz"
    type = "javascript"
 
    account_id = "YOUR_ACCOUNT_ID"

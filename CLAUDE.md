@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-DT is a simple static website for converting natural language date/time strings to different timezones. Users can input phrases like "tomorrow at 3pm" or "next Friday" and see the converted time in their selected timezone.
+TZ is a simple static website for converting natural language date/time strings to different timezones. Users can input phrases like "tomorrow at 3pm" or "next Friday" and see the converted time in their selected timezone.
 
 ## Build and Development Commands
 

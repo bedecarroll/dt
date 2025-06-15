@@ -1,5 +1,5 @@
 {
-  "name": "dt-datetime-converter",
+  "name": "tz",
   "version": "1.0.0",
   "main": "src/main.ts",
   "devDependencies": {
