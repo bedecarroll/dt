@@ -40,6 +40,8 @@ const SHOW_RELATIVE_DIFF = false;
 
 class App {
   private datetimeInput: HTMLInputElement;
+  private datetimeInput2: HTMLInputElement;
+  private operationSelect: HTMLSelectElement;
   private timezoneInput: HTMLInputElement;
   private convertBtn: HTMLButtonElement;
   private resetBtn: HTMLButtonElement;
@@ -60,6 +62,8 @@ class App {
 
   constructor() {
     this.datetimeInput = document.getElementById('datetime-input') as HTMLInputElement;
+    this.datetimeInput2 = document.getElementById('datetime-input-2') as HTMLInputElement;
+    this.operationSelect = document.getElementById('operation-select') as HTMLSelectElement;
     this.timezoneInput = document.getElementById('timezone-input') as HTMLInputElement;
     this.convertBtn = document.getElementById('convert-btn') as HTMLButtonElement;
     this.resetBtn = document.getElementById('reset-timezones-btn') as HTMLButtonElement;
@@ -247,8 +251,24 @@ class App {
       this.showError(parseResult.error || 'Error parsing date');
       return;
     }
-    this.lastParsedDate = parseResult.parsedDate;
-    this.displayResult(parseResult);
+    let finalDate = parseResult.parsedDate;
+
+    const secondText = this.datetimeInput2.value.trim();
+    if (secondText) {
+      const secondRes = DateTimeConverter.parseAndConvert(secondText, this.timezones[0]);
+      if (secondRes.error || !secondRes.parsedDate) {
+        this.showError(secondRes.error || 'Error parsing second date');
+        return;
+      }
+      if (this.operationSelect.value === 'add') {
+        finalDate = new Date(finalDate.getTime() + secondRes.parsedDate.getTime());
+      } else {
+        finalDate = new Date(finalDate.getTime() - secondRes.parsedDate.getTime());
+      }
+    }
+
+    this.lastParsedDate = finalDate;
+    this.displayResult({ parsedDate: finalDate });
   }
 
   private displayResult(result: any): void {
