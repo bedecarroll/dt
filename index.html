@@ -24,6 +24,20 @@
                 <input type="text" id="datetime-input" placeholder="Enter natural language date/time..." aria-describedby="datetime-help">
                 <div id="datetime-help" class="sr-only">Enter natural language date and time expressions or Unix timestamps</div>
             </div>
+
+            <div class="input-section">
+                <label for="datetime-input-2">Second date/time</label>
+                <input type="text" id="datetime-input-2" placeholder="Optional second date/time..." aria-describedby="datetime-help-2">
+                <div id="datetime-help-2" class="sr-only">Enter another date/time to add or subtract</div>
+            </div>
+
+            <div class="input-section">
+                <label for="operation-select">Operation:</label>
+                <select id="operation-select">
+                    <option value="add">Add</option>
+                    <option value="subtract">Subtract</option>
+                </select>
+            </div>
             
             <div class="timezone-section">
                 <label for="timezone-input">Add timezones:</label>

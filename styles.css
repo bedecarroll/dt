@@ -39,6 +39,7 @@ label {
   font-weight: bold;
 }
 input[type="text"],
+select,
 button {
   width: 100%;
   border: 4px solid #000;
@@ -303,6 +304,7 @@ body.dark header {
   border-color: #fff;
 }
 body.dark input[type="text"],
+body.dark select,
 body.dark button,
 body.dark .reset-btn,
 body.dark .theme-toggle-btn,
